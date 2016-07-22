@@ -1,9 +1,9 @@
-<h1>Forgot your password?</h1>
+<h1>{{ "forgotyourpassword.title"|t }}</h1>
 
 <form>
     <div class="form-group">
-        <label for="email">Enter your email address</label>
-        <input type="email" class="form-control" id="email" placeholder="Email">
+        <label for="email">{{ "forgotyourpassword.enteremail"|t }}</label>
+        <input type="email" class="form-control" id="email" placeholder="{{ "forgotyourpassword.email"|t }}" value="{{ email }}">
     </div>
-    <button type="submit" class="btn btn-primary">Submit</button>
+    <button type="submit" class="btn btn-primary">{{ "forgotyourpassword.submit"|t }}</button>
 </form>

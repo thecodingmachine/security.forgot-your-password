@@ -17,6 +17,7 @@
 	"require" : {
 		"php" : ">=7.0",
 		"mouf/mvc.splash-common": "^8.0",
+		"mouf/utils.i18n.fine.language-detection": "~4.0",
 		"mouf/utils.i18n.fine.file-translator": "~4.0",
 		"mouf/utils.i18n.fine.common": "~4.0"
 	},
@@ -34,6 +35,15 @@
 		"Mouf\\Security\\Password\\" : "tests/"
   	  }
     },
+	"extra" : {
+		"mouf" : {
+			"install" : [{
+				"class" : "Mouf\\Security\\Password\\ForgotYourPasswordInstaller",
+				"type" : "class"
+			}
+			]
+		}
+	},
 	"minimum-stability" : "dev",
     "prefer-stable": true
 }
