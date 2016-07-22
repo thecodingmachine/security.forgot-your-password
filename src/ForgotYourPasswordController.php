@@ -5,8 +5,9 @@ namespace Mouf\Security\Password;
 
 
 use Mouf\Html\HtmlElement\HtmlBlock;
-use Mouf\Html\Renderer\Twig\TwigTemplate;
 use Mouf\Html\Template\TemplateInterface;
+use Mouf\Mvc\Splash\Annotations\Get;
+use Mouf\Mvc\Splash\Annotations\Post;
 use Mouf\Mvc\Splash\Annotations\URL;
 use Mouf\Mvc\Splash\HtmlResponse;
 use Psr\Log\LoggerInterface;
@@ -58,13 +59,35 @@ class ForgotYourPasswordController
      * Displays the screen to enter the email.
      *
      * @URL("{$this->baseUrl}/password")
+     * @Get
      *
      * @param string|null $email
      */
     public function index(string $email = null)
     {
+        $view = new ForgotYourPasswordView();
+        if ($email) {
+            $view->setEmail($email);
+        }
+
         // Let's add the twig file to the template.
-        $this->content->addHtmlElement(new TwigTemplate($this->twig, 'vendor/mouf/security.forgot-your-password/views/forgotYourPassword/index.twig', array("email"=>$email)));
+        $this->content->addHtmlElement($view);
+
+        return new HtmlResponse($this->template);
+    }
+
+    /**
+     * Displays the screen to enter the email.
+     *
+     * @URL("{$this->baseUrl}/password")
+     * @Post
+     *
+     * @param string $email
+     */
+    public function submit(string $email)
+    {
+        // Let's add the twig file to the template.
+        $this->content->addHtmlElement(new ForgotYourPasswordView($email));
 
         return new HtmlResponse($this->template);
     }

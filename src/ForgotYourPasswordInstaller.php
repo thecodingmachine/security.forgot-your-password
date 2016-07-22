@@ -1,5 +1,5 @@
 <?php
-namespace Mouf\Utils\Cache;
+namespace Mouf\Security\Password;
 
 use Mouf\Html\Renderer\RendererUtils;
 use Mouf\Installer\PackageInstallerInterface;
