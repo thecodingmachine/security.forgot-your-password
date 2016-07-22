@@ -6,6 +6,7 @@
 [![Build Status](https://travis-ci.org/thecodingmachine/security.forgot-your-password.svg?branch=1.0)](https://travis-ci.org/thecodingmachine/security.forgot-your-password)
 [![Coverage Status](https://coveralls.io/repos/thecodingmachine/security.forgot-your-password/badge.svg?branch=1.0&service=github)](https://coveralls.io/github/thecodingmachine/security.forgot-your-password?branch=1.0)
 
+**Work in progress!**
 
 Forgot your password feature for Mouf
 =====================================
