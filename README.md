@@ -24,3 +24,21 @@ Usage
 =====
 
 TODO
+
+
+
+Customizing
+===========
+
+Customizing the email
+---------------------
+
+The email originites from a [`SwiftTwigMailTemplate`](https://github.com/thecodingmachine/swift-twig-mail-template).
+
+If you want to customize this email, you can either:
+
+- change the Twig template completely (by mapping TODO)
+- TODO i18n
+
+
+

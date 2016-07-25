@@ -20,7 +20,10 @@
 		"mouf/utils.i18n.fine.language-detection": "~4.0",
 		"mouf/utils.i18n.fine.file-translator": "~4.0",
 		"mouf/utils.i18n.fine.common": "~4.0",
-		"mouf/security.forgot-your-password-interface": "~1.0"
+		"mouf/security.forgot-your-password-interface": "~1.0",
+		"mouf/utils.mailer.swift-mail-service": "~1.0",
+		"thecodingmachine/swift-twig-mail-template": "~5.0",
+		"ramsey/uuid": "^3.4"
 	},
     "require-dev" : {
 	    "phpunit/phpunit": "^5.4.6",
