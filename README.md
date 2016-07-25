@@ -23,22 +23,79 @@ composer require mouf/security.forgot-your-password
 Usage
 =====
 
-TODO
-
+Install the package using the Mouf installer.
 
 
 Customizing
 ===========
 
+In this package, the views are based on the Bootstrap framework CSS. If your project uses another framework, you'll need to overwrite the views.
+
+Customizing the "forgot your password" page
+-------------------------------------------
+
+The main "forgot your password" form is rendered using the `Mouf\Security\Password\ForgotYourPasswordView`.
+The Twig template is available in `vendor/mouf/security.forgot-your-password/src/templates/Mouf/Security/Password/ForgotYourPasswordView.twig`.
+To overwrite, copy this file to `src/templates/Mouf/Security/Password/ForgotYourPasswordView.twig` and purge your cache.
+
+Customizing the "email sent" page
+---------------------------------
+
+Once the "forgot your password" page is filled, the user arrives on the "email sent" page.
+
+The page is rendered using the `Mouf\Security\Password\EmailSentView`.
+The Twig template is available in `vendor/mouf/security.forgot-your-password/src/templates/Mouf/Security/Password/EmailSentView.twig`.
+To overwrite, copy this file to `src/templates/Mouf/Security/Password/EmailSentView.twig` and purge your cache.
+
 Customizing the email
 ---------------------
 
-The email originites from a [`SwiftTwigMailTemplate`](https://github.com/thecodingmachine/swift-twig-mail-template).
+The email originates from a [`SwiftTwigMailTemplate`](https://github.com/thecodingmachine/swift-twig-mail-template).
 
 If you want to customize this email, you can either:
 
-- change the Twig template completely (by mapping TODO)
-- TODO i18n
+- change the Twig template completely (by editing the |forgotYourPasswordMailTemplate` instance in the container and modifying the `twigPath` property to your own file)
+- or you can simply overwrite the i18n strings by providing your own keys for the subject and the body:
+    - `forgotyourpassword.mail.subject` is the subject
+    - `forgotyourpassword.mail.body` is the body of the text
+    
+Customizing the "token not found" page
+--------------------------------------
 
+In case the user clicks on a URL link with a token that has already been used (or that is invalid), the "token not found" page is displayed.
 
+The page is rendered using the `Mouf\Security\Password\TokenNotFoundView`.
+The Twig template is available in `vendor/mouf/security.forgot-your-password/src/templates/Mouf/Security/Password/TokenNotFoundView.twig`.
+To overwrite, copy this file to `src/templates/Mouf/Security/Password/TokenNotFoundView.twig` and purge your cache.
 
+Customizing the "reset password" page
+-------------------------------------
+
+When the user clicks on the link in the mail, he is redirected to the "reset password" page.
+
+The page is rendered using the `Mouf\Security\Password\ResetPasswordView`.
+The Twig template is available in `vendor/mouf/security.forgot-your-password/src/templates/Mouf/Security/Password/ResetPasswordView.twig`.
+To overwrite, copy this file to `src/templates/Mouf/Security/Password/ResetPasswordView.twig` and purge your cache.
+
+Customizing the "password reseted" page
+---------------------------------------
+
+This is the last page of the workflow, confirming the password was reset successfully.
+
+The page is rendered using the `Mouf\Security\Password\ConfirmResetPasswordView`.
+The Twig template is available in `vendor/mouf/security.forgot-your-password/src/templates/Mouf/Security/Password/ConfirmResetPasswordView.twig`.
+To overwrite, copy this file to `src/templates/Mouf/Security/Password/ConfirmResetPasswordView.twig` and purge your cache.
+
+Customizing password check strength
+-----------------------------------
+
+By default when you reset your password, you will be asked a password that is:
+
+- at least 7 characters long
+- that contains at least one upper case letter
+- that contains at least one lower case letter
+- that contains at least one number
+
+This can be completely configured in the `Mouf\Security\Password\PasswordStrengthCheck` instance.
+
+Also, if you have very specific needs regarding password strength (for instance: at least 2 special characters, only japanese characters allowed, etc...), then you can simply provide your own service as long as it implements `Mouf\Security\Password\Api\PasswordStrengthCheck`.
