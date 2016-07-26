@@ -6,8 +6,6 @@
 [![Build Status](https://travis-ci.org/thecodingmachine/security.forgot-your-password.svg?branch=1.0)](https://travis-ci.org/thecodingmachine/security.forgot-your-password)
 [![Coverage Status](https://coveralls.io/repos/thecodingmachine/security.forgot-your-password/badge.svg?branch=1.0&service=github)](https://coveralls.io/github/thecodingmachine/security.forgot-your-password?branch=1.0)
 
-**Work in progress!**
-
 Forgot your password feature for Mouf
 =====================================
 
@@ -25,6 +23,14 @@ Usage
 
 Install the package using the Mouf installer.
 
+This package **provides**:
+
+- A controller (`ForgotYourPasswordController`): this controller provides the default `forgot/password` route that leads to the "I forgot my password" form.
+  It also provides the `forgot/reset` route that is linked to in the mail. This route allows the user to reset its password.
+- A service (`ForgotYourPasswordService`): this service is in charge of generating the unique token and sending the mail.
+
+This package **does not contain** a way to access your database to store/retrieve tokens and associated users. For this, you need to provide a package implementing the [`ForgotYourPasswordDao` interface](http://mouf-php.com/packages/mouf/security.forgot-your-password-interface).
+For this, you might want to you an existing package already implementing it. If you are using TDBM, we recommend using [mouf/security.daos.tdbm](http://mouf-php.com/packages/mouf/security.daos.tdbm).
 
 Customizing
 ===========

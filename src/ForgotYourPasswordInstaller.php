@@ -2,6 +2,7 @@
 
 namespace Mouf\Security\Password;
 
+use Mouf\Actions\InstallUtils;
 use Mouf\Html\Renderer\RendererUtils;
 use Mouf\Installer\PackageInstallerInterface;
 use Mouf\MoufManager;
@@ -17,6 +18,19 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
     {
         // Let's create the renderer
         RendererUtils::createPackageRenderer($moufManager, 'mouf/security.forgot-your-password');
+
+        $configManager = $moufManager->getConfigManager();
+
+        $constants = $configManager->getMergedConstants();
+
+        if (!isset($constants['MAIL_FROM'])) {
+            $configManager->registerConstant("MAIL_FROM", "string", "ro-reply@localhost", "The 'from' value used when sending mails.");
+        }
+
+        $configPhpConstants = $configManager->getDefinedConstants();
+        $configPhpConstants['MAIL_FROM'] = true;
+        $configManager->setDefinedConstants($configPhpConstants);
+
 
         // These instances are expected to exist when the installer is run.
         $defaultTranslationService = $moufManager->getInstanceDescriptor('defaultTranslationService');
