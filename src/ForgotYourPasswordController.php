@@ -8,7 +8,6 @@ use Mouf\Mvc\Splash\Annotations\Get;
 use Mouf\Mvc\Splash\Annotations\Post;
 use Mouf\Mvc\Splash\Annotations\URL;
 use Mouf\Mvc\Splash\HtmlResponse;
-use Mouf\Security\Password\Api\ForgotYourPasswordDao;
 use Mouf\Security\Password\Api\PasswordStrengthCheck;
 use Mouf\Security\UserService\UserService;
 use Psr\Http\Message\ResponseInterface;
@@ -54,7 +53,7 @@ class ForgotYourPasswordController
     /**
      * The service that will actually check the tokens.
      *
-     * @var ForgotYourPasswordDao
+     * @var ForgotYourPasswordService
      */
     private $forgotYourPasswordService;
 

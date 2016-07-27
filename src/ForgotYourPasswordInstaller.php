@@ -24,13 +24,12 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
         $constants = $configManager->getMergedConstants();
 
         if (!isset($constants['MAIL_FROM'])) {
-            $configManager->registerConstant("MAIL_FROM", "string", "ro-reply@localhost", "The 'from' value used when sending mails.");
+            $configManager->registerConstant('MAIL_FROM', 'string', 'ro-reply@localhost', "The 'from' value used when sending mails.");
         }
 
         $configPhpConstants = $configManager->getDefinedConstants();
-        $configPhpConstants['MAIL_FROM'] = true;
+        $configPhpConstants['MAIL_FROM'] = 'ro-reply@localhost';
         $configManager->setDefinedConstants($configPhpConstants);
-
 
         // These instances are expected to exist when the installer is run.
         $defaultTranslationService = $moufManager->getInstanceDescriptor('defaultTranslationService');
@@ -40,7 +39,6 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
             $Mouf_Security_DAO_SecurityUserDao = null;
         }
         $swiftMailer = $moufManager->getInstanceDescriptor('swiftMailer');
-        $forgotYourPasswordMailTemplate = $moufManager->getInstanceDescriptor('forgotYourPasswordMailTemplate');
         $userService = $moufManager->getInstanceDescriptor('userService');
         $psr_errorLogLogger = $moufManager->getInstanceDescriptor('psr.errorLogLogger');
         $bootstrapTemplate = $moufManager->getInstanceDescriptor('bootstrapTemplate');
@@ -51,6 +49,7 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
         $Mouf_Security_Password_PasswordStrengthCheck = InstallUtils::getOrCreateInstance('Mouf\\Security\\Password\\PasswordStrengthCheck', 'Mouf\\Security\\Password\\PasswordStrengthCheck', $moufManager);
         $Mouf_Security_Password_ForgotYourPasswordService = InstallUtils::getOrCreateInstance('Mouf\\Security\\Password\\ForgotYourPasswordService', 'Mouf\\Security\\Password\\ForgotYourPasswordService', $moufManager);
         $Mouf_Security_Password_ForgotYourPasswordController = InstallUtils::getOrCreateInstance('Mouf\\Security\\Password\\ForgotYourPasswordController', 'Mouf\\Security\\Password\\ForgotYourPasswordController', $moufManager);
+        $forgotYourPasswordMailTemplate = InstallUtils::getOrCreateInstance('forgotYourPasswordMailTemplate', 'TheCodingMachine\\Mail\\Template\\SwiftTwigMailTemplate', $moufManager);
 
         // Let's bind instances together.
         if (!$Mouf_Security_Password_PasswordStrengthCheck->getConstructorArgumentProperty('translationService')->isValueSet()) {
@@ -88,6 +87,16 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
         }
         if (!$Mouf_Security_Password_ForgotYourPasswordController->getConstructorArgumentProperty('passwordStrengthCheck')->isValueSet()) {
             $Mouf_Security_Password_ForgotYourPasswordController->getConstructorArgumentProperty('passwordStrengthCheck')->setValue($Mouf_Security_Password_PasswordStrengthCheck);
+        }
+        if (!$forgotYourPasswordMailTemplate->getConstructorArgumentProperty('twig_Environment')->isValueSet()) {
+            $forgotYourPasswordMailTemplate->getConstructorArgumentProperty('twig_Environment')->setValue($twigEnvironment);
+        }
+        if (!$forgotYourPasswordMailTemplate->getConstructorArgumentProperty('twigPath')->isValueSet()) {
+            $forgotYourPasswordMailTemplate->getConstructorArgumentProperty('twigPath')->setValue('vendor/mouf/security.forgot-your-password/src/templates/forgotyourpasswordmail.twig');
+        }
+        if (!$forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->isValueSet()) {
+            $forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->setValue('MAIL_FROM');
+            $forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->setOrigin('config');
         }
 
         // Let's rewrite the MoufComponents.php file to save the component

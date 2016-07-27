@@ -5,7 +5,6 @@ namespace Mouf\Security\Password;
 use Mouf\Security\Password\Api\ForgotYourPasswordDao;
 use Mouf\Security\Password\Api\TokenNotFoundException;
 use Mouf\Security\UserService\UserService;
-use Mouf\Utils\Value\ValueInterface;
 use Psr\Http\Message\UriInterface;
 use Ramsey\Uuid\Uuid;
 use TheCodingMachine\Mail\Template\SwiftTwigMailTemplate;
@@ -37,7 +36,8 @@ class ForgotYourPasswordService
      *
      * @param ForgotYourPasswordDao $forgetYourPasswordDao
      * @param \Swift_Mailer         $swiftMailer
-     * @param ValueInterface|string $from
+     * @param SwiftTwigMailTemplate $mailTemplate
+     * @param UserService           $userService
      */
     public function __construct(ForgotYourPasswordDao $forgetYourPasswordDao, \Swift_Mailer $swiftMailer, SwiftTwigMailTemplate $mailTemplate, UserService $userService)
     {
