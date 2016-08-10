@@ -208,7 +208,7 @@ class ForgotYourPasswordController
 
     private function isJson(ServerRequestInterface $request) : bool
     {
-        return strpos($request->getHeaderLine('Accept'), 'json') !== false;
+        return stripos($request->getHeaderLine('Content-Type'), "application/json") === 0;
     }
 
     private function jsonSentResponse() : ResponseInterface
