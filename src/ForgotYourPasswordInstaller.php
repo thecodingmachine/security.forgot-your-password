@@ -44,6 +44,7 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
         $bootstrapTemplate = $moufManager->getInstanceDescriptor('bootstrapTemplate');
         $block_content = $moufManager->getInstanceDescriptor('block.content');
         $twigEnvironment = $moufManager->getInstanceDescriptor('twigEnvironment');
+        $cascadingLanguageDetection = $moufManager->getInstanceDescriptor('cascadingLanguageDetection');
 
         // Let's create the instances.
         $Mouf_Security_Password_PasswordStrengthCheck = InstallUtils::getOrCreateInstance('Mouf\\Security\\Password\\PasswordStrengthCheck', 'Mouf\\Security\\Password\\PasswordStrengthCheck', $moufManager);
@@ -97,6 +98,21 @@ class ForgotYourPasswordInstaller implements PackageInstallerInterface
         if (!$forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->isValueSet()) {
             $forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->setValue('MAIL_FROM');
             $forgotYourPasswordMailTemplate->getSetterProperty('setFromAddresses')->setOrigin('config');
+        }
+
+        if (!$moufManager->has('forgotYourPasswordTranslator')) {
+            $forgotYourPasswordTranslator = InstallUtils::getOrCreateInstance('forgotYourPasswordTranslator', 'Mouf\\Utils\\I18n\\Fine\\Translator\\FileTranslator', $moufManager);
+
+            if (!$forgotYourPasswordTranslator->getConstructorArgumentProperty('i18nMessagePath')->isValueSet()) {
+                $forgotYourPasswordTranslator->getConstructorArgumentProperty('i18nMessagePath')->setValue('vendor/mouf/security.forgot-your-password/ressources/');
+            }
+            if (!$forgotYourPasswordTranslator->getConstructorArgumentProperty('languageDetection')->isValueSet()) {
+                $forgotYourPasswordTranslator->getConstructorArgumentProperty('languageDetection')->setValue($cascadingLanguageDetection);
+            }
+
+            $translators = $defaultTranslationService->getProperty('translators')->getValue();
+            $translators[] = $forgotYourPasswordTranslator;
+            $defaultTranslationService->getProperty('translators')->setValue($translators);
         }
 
         // Let's rewrite the MoufComponents.php file to save the component
