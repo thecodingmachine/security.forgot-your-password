@@ -8,7 +8,7 @@ use Mouf\Mvc\Splash\Annotations\Get;
 use Mouf\Mvc\Splash\Annotations\Post;
 use Mouf\Mvc\Splash\Annotations\URL;
 use Mouf\Mvc\Splash\HtmlResponse;
-use Mouf\Security\Password\Api\PasswordStrengthCheck;
+use Mouf\Security\Password\Api\PasswordStrengthCheck as PasswordStrengthCheckInterface;
 use Mouf\Security\UserService\UserService;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -75,7 +75,7 @@ class ForgotYourPasswordController
     private $noLeak = false;
 
     /**
-     * @var PasswordStrengthCheck
+     * @var PasswordStrengthCheckInterface
      */
     private $passwordStrengthCheck;
 
@@ -96,7 +96,7 @@ class ForgotYourPasswordController
      * @param HtmlBlock         $content  The main content block of the page
      * @param Twig_Environment  $twig     The Twig environment (used to render Twig templates)
      */
-    public function __construct(LoggerInterface $logger, TemplateInterface $template, HtmlBlock $content, Twig_Environment $twig, ForgotYourPasswordService $forgotYourPasswordService, UserService $userService, PasswordStrengthCheck $passwordStrengthCheck)
+    public function __construct(LoggerInterface $logger, TemplateInterface $template, HtmlBlock $content, Twig_Environment $twig, ForgotYourPasswordService $forgotYourPasswordService, UserService $userService, PasswordStrengthCheckInterface $passwordStrengthCheck)
     {
         $this->logger = $logger;
         $this->template = $template;
@@ -208,7 +208,7 @@ class ForgotYourPasswordController
 
     private function isJson(ServerRequestInterface $request) : bool
     {
-        return strpos($request->getHeaderLine('Accept'), 'json') !== false;
+        return stripos($request->getHeaderLine('Content-Type'), "application/json") === 0;
     }
 
     private function jsonSentResponse() : ResponseInterface
