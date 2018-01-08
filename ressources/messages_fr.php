@@ -44,7 +44,7 @@ Vous pouvez réessayer de réinitialiser votre mot de passe. Le mail de réiniti
   'passwordservice.lower_case' => 'Un caractère en minuscule',
   'passwordservice.minimum_length' => '{length} caractères',
   'passwordservice.number_case' => 'Un chiffre',
-  'passwordservice.upper_case' => 'Un caractère en majuscules',
+  'passwordservice.upper_case' => 'Un caractère en majuscule',
   'resetpassword.confirmpassword' => 'Ressaisissez votre mot de passe',
   'resetpassword.mismatchingpasswords' => 'Les mots de passe que vous avez tapé ne sont pas identiques',
   'resetpassword.password' => 'Mot de passe',
